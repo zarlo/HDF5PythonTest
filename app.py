@@ -41,4 +41,15 @@ StoreFile('im1.jpg', '/cats/im1.jpg')
 StoreFile('im2.jpg', '/cats/im2.jpg')
 StoreFile('im3.jpg', '/cats/im3.jpg')
 
-print(List('/cats/'))
+workPath = "/"
+
+print(List('/'))
+
+while True:
+    path = input(workPath + ':>')
+    if path.startswith('/'):
+        workPath = path
+    else:
+        workPath += path
+
+    print(List(workPath))
