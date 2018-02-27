@@ -12,24 +12,26 @@ class FileHelper(object):
     def get(self):
         return self.db
 
-    def StoreFile(self, Path, StorePath, **mataData):
-        ImageFile = open(Path, 'rb')
+    def get(self, Path):
+        return self.db[Path]
+
+    def store_file(self, Path, store_path):
+        file = open(Path, 'rb')
         try:
             dt = h5py.special_dtype(vlen=np.dtype('uint8'))
-            temp = self.db.create_dataset(StorePath, (1,), dtype=dt)
+            temp = self.db.create_dataset(store_path, (1,), dtype=dt)
         except Exception as e:
-            temp = self.db[StorePath]
+            temp = self.db[store_path]
 
-        temp[0] = np.fromstring(ImageFile.read(), dtype='uint8')
-        
+        temp[0] = np.fromstring(file.read(), dtype='uint8')
 
-    def StoreFromFolder(self, Path, savePath=""):
+    def store_from_folder(self, path, save_path=""):
 
-        directory = os.fsencode(Path)
+        directory = os.fsencode(path)
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
-            self.StoreFile(Path + filename, savePath + filename)
+            self.store_file(path + filename, save_path + filename)
 
-    def List(self, Path):
-        return [key for key in self.db[Path].keys()]
+    def list(self, path):
+        return [key for key in self.db[path].keys()]
 
