@@ -1,6 +1,5 @@
 import numpy as np
 import h5py
-import io
 import os
 
 
@@ -14,6 +13,9 @@ class FileHelper(object):
 
     def get(self, Path):
         return self.db[Path]
+
+    def list(self, path):
+        return [key for key in self.db[path].keys()]
 
     def store_file(self, Path, store_path):
         file = open(Path, 'rb')
@@ -31,7 +33,4 @@ class FileHelper(object):
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
             self.store_file(path + filename, save_path + filename)
-
-    def list(self, path):
-        return [key for key in self.db[path].keys()]
 

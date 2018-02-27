@@ -8,7 +8,6 @@ f.store_file('im2.jpg', '/cats/im2.jpg')
 f.store_file('im3.jpg', '/cats/im3.jpg')
 workPath = "/"
 
-
 print(f.list('/'))
 
 while True:
