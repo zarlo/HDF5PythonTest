@@ -1,14 +1,13 @@
 from PIL import Image
 import numpy as np
 import h5py
-import six
 import io
 import os
-#h5py.run_tests()
+
 f = h5py.File('TestFile.hdf5')
 
-#this lets you store data
-def StoreFile(Path, StorePath):
+#this lets you store Files
+def StoreFile(Path, StorePath, **mataData):
     ImageFile = open(Path, 'rb')
     try:
         dt = h5py.special_dtype(vlen=np.dtype('uint8'))
@@ -17,13 +16,12 @@ def StoreFile(Path, StorePath):
         temp = f[StorePath]
 
     temp[0] = np.fromstring(ImageFile.read(), dtype='uint8')
+    for key, value in mataData.iteritems():
+        temp.attrs[key] = value
 
+#lets you store Files from a folder
+def StoreFromFolder(Path, savePath = ""):
 
-#lets you store data from a folder
-def StoreFromFolder(Path, savePath = -1):
-
-    if savePath is -1:
-        savePath = Path
     directory = os.fsencode(Path)
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
@@ -51,5 +49,5 @@ while True:
         workPath = path
     else:
         workPath += path
-
+ 
     print(List(workPath))
